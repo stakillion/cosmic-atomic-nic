@@ -60,12 +60,6 @@ RUN for res in 16 24 32 48 64 128 256; do \
 COPY rootfs/usr/ /usr/
 COPY rootfs/etc/ /etc/
 
-# Ensure sysusers, schemas, dconf are built, and add error tolerance to start-cosmic
-RUN sed -i 's/systemctl --user import-environment XDG_SESSION_TYPE.*/& || true/' /usr/bin/start-cosmic && \
-    systemd-sysusers && \
-    glib-compile-schemas /usr/share/glib-2.0/schemas && \
-    dconf update
-
 # Configure dnscrypt
 RUN sed -i -E "s/^#[[:space:]]*server_names[[:space:]]*=.*/server_names = ['quad9-dnscrypt-ip4-filter-pri']/" /etc/dnscrypt-proxy/dnscrypt-proxy.toml && \
     sed -i -E "s/^[[:space:]]*require_nofilter[[:space:]]*=.*/require_nofilter = false/" /etc/dnscrypt-proxy/dnscrypt-proxy.toml && \
