@@ -1,0 +1,11 @@
+[Unit]
+Description=Lid Guard Pre-Sleep
+DefaultDependencies=no
+Before=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/lid-sleep-guard pre
+
+[Install]
+WantedBy=sleep.target
