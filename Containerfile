@@ -30,8 +30,10 @@ RUN rm -rf /opt && \
 # Remove stock kernel & Firefox, then install OGC kernel and system packages
 RUN --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
     --mount=type=bind,from=akmods,src=/rpms,dst=/tmp/nvidia-rpms \
+    dnf swap -y tuned-ppd power-profiles-daemon && \
     dnf remove -y \
         kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
+        rpm-ostree rpm-ostree-libs tuned \
         firefox firefox-langpacks \
         toolbox && \
     rm -rf /usr/lib/modules/* && \
